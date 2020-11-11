@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &503504596531114029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 503504596531114028}
+  - component: {fileID: 503504596531114031}
+  m_Layer: 0
+  m_Name: HexGrid
+  m_TagString: HexGrid
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &503504596531114028
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503504596531114029}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &503504596531114031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503504596531114029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a27273d2d0809b74cb7a77286c3477ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellPrefab: {fileID: 5670896127106923808, guid: 08a2a3e2f3698be4db9d8818dea2901d,
+    type: 3}
+  chunkPrefab: {fileID: 3109163205152254394, guid: 8f36f76d6ae2bd14098a886720fe2077,
+    type: 3}
+  unitPrefab: {fileID: 8786507427851499487, guid: ad2ee255489079d4089ba97eb0bcb0bd,
+    type: 3}
+  projectilePrefab: {fileID: 5139293091862662132, guid: 5f53c8bfbc0da994595498b134b60312,
+    type: 3}
+  specificUIOption: {fileID: 0}
+  activeUnits: []
+  inactiveUnits: []
+  cellLabelPrefab: {fileID: 4296420673461403419, guid: cadf79df1366e85489e8ae64114c7f91,
+    type: 3}
+  touchedColor: {r: 1, g: 0, b: 1, a: 1}
+  colors:
+  - {r: 1, g: 0.9266826, b: 0.28773582, a: 1}
+  - {r: 0.1327109, g: 0.8207547, b: 0.127759, a: 1}
+  - {r: 0.6792453, g: 0.44270316, b: 0.24670699, a: 1}
+  - {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
+  - {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 1}
+  noiseSource: {fileID: 2800000, guid: 16915c9834caa7e43b701642ced51386, type: 3}
+  cellCountX: 40
+  cellCountZ: 40
+  seed: 0
