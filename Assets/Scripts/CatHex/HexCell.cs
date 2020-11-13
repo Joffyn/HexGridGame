@@ -333,6 +333,11 @@ public class HexCell : MonoBehaviour
             waterLevel = value;
             ValidateRivers();
             Refresh();
+
+            if(waterLevel > elevation)
+            {
+                FireLevel = 0;
+            }
         }
     }
 
@@ -350,6 +355,23 @@ public class HexCell : MonoBehaviour
         {
             return
                 (waterLevel + HexMetrics.waterElevationOffset) *
+                HexMetrics.elevationStep;
+        }
+    }
+
+    public bool IsOnFire
+    {
+        get
+        {
+            return fireLevel > elevation;
+        }
+    }
+    public float FireSurfaceY
+    {
+        get
+        {
+            return
+                (fireLevel + HexMetrics.fireElevationOffset) *
                 HexMetrics.elevationStep;
         }
     }
@@ -404,7 +426,25 @@ public class HexCell : MonoBehaviour
         }
     }
 
-    int urbanLevel, farmLevel, plantLevel;
+    public int FireLevel
+    {
+        get
+        {
+            return fireLevel;
+        }
+        set
+        {
+            if (fireLevel != value)
+            {
+                fireLevel = value;
+                RefreshSelfOnly();
+                gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                FireLevel = Elevation +1;
+            }
+        }
+    }
+
+    int urbanLevel, farmLevel, plantLevel, fireLevel;
     #endregion
 
     #region Walls

@@ -23,7 +23,7 @@ public class HexUnit : MonoBehaviour
     }
     public enum UnitAction
     {
-        Idle, Move, Attack, RangedAttack, Earth, Water
+        Idle, Move, Attack, RangedAttack, Earth, Water, Fire
     }
 
     public enum UnitLookingAt
@@ -175,6 +175,11 @@ public class HexUnit : MonoBehaviour
     public void SetWaterManipulation()
     {
         unitAction = UnitAction.Water;
+    }
+
+    public void SetFireManipulation()
+    {
+        unitAction = UnitAction.Fire;
     }
     #endregion
     public void DoAttack(HexCell cellToBeAttacked)

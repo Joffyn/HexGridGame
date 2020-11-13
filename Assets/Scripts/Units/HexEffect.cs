@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class HexEffect : MonoBehaviour
 {
+    public int effectMovement;
+    public string effectName;
+    public static HexProjectile effectPrefab;
+    public List<HexCell> pathToTravel;
+    public float travelSpeed;
+    public float rotationSpeed = 600f;
 
     void OnEnable()
     {
@@ -23,7 +29,7 @@ public class HexEffect : MonoBehaviour
         {
             if (location)
             {
-                location.Unit = null;
+                location.Effect = null;
             }
             location = value;
             value.Effect = this;
@@ -31,6 +37,20 @@ public class HexEffect : MonoBehaviour
         }
     }
     HexCell location;
+
+    public float Orientation
+    {
+        get
+        {
+            return orientation;
+        }
+        set
+        {
+            orientation = value;
+            transform.localRotation = Quaternion.Euler(0f, value, 0f);
+        }
+    }
+    float orientation;
     public void ValidateLocation()
     {
         transform.localPosition = location.Position;

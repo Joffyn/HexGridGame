@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.IO;
 using System.Linq;
+using System;
+
 
 public class HexGameUI : MonoBehaviour
 {
@@ -25,6 +27,7 @@ public class HexGameUI : MonoBehaviour
 
     #endregion
 
+    
     HexCell cellToBeManipulated;
     float targetCellElevation;
    
@@ -60,6 +63,8 @@ public class HexGameUI : MonoBehaviour
                 {
                     case (HexUnit.UnitAction.Idle):
                         break;
+
+
                     case (HexUnit.UnitAction.Move):
                             if (Input.GetMouseButtonDown(0))
                             {
@@ -77,13 +82,13 @@ public class HexGameUI : MonoBehaviour
                     case (HexUnit.UnitAction.Attack):
                                  UpdateCurrentCell();
                                     if (currentCell.Distance == 1) //Change this to unitrange later
-                                         {
-                                              if (Input.GetMouseButtonDown(0) && currentCell.Unit && currentCell.Unit != activeUnit)
-                                              {
+                                    {
+                                          if (Input.GetMouseButtonDown(0) && currentCell.Unit && currentCell.Unit != activeUnit)
+                                          {
                                                 activeUnit.DoAttack(currentCell);
-                                              }
+                                          }
 
-                                         }
+                                    }
                         break;
                     case (HexUnit.UnitAction.RangedAttack):
                         UpdateCurrentCell();
@@ -123,6 +128,37 @@ public class HexGameUI : MonoBehaviour
                             grid.SearchInRange(CellToBeManipulated, 0, 1);
                         }
 
+                        break;
+
+                    case (HexUnit.UnitAction.Fire):
+                        UpdateCurrentCell();
+
+                        if (currentCell.Distance <= 2 && !currentCell.IsUnderwater && Input.GetMouseButtonDown(0) && currentCell.FireLevel != 1)
+                        {
+
+                            for(int i = 0; i < 10; i++)
+                            { 
+                            Array values = Enum.GetValues(typeof(HexDirection));
+                            System.Random random = new System.Random();
+                            HexDirection randomDirection = (HexDirection)values.GetValue(random.Next(values.Length));
+
+                                if (currentCell.GetNeighbor(randomDirection).FireLevel == 1)
+                                    continue;
+
+                                else
+                                {
+                                    currentCell.GetNeighbor(randomDirection).FireLevel = 1;
+                                    currentCell.FireLevel = 1;
+                                    return;
+                                }
+                                
+                            }
+
+                            
+
+                            NewButtonPressed();
+                            SetIdle();
+                        }
                         break;
 
                     case (HexUnit.UnitAction.Water):
@@ -296,6 +332,13 @@ public class HexGameUI : MonoBehaviour
         grid.ClearPath();
         grid.SearchInRange(activeUnit.Location, 3, 1);
         activeUnit.SetWaterManipulation();
+    }
+
+    public void SetFireManipulationButton()
+    {
+        grid.ClearPath();
+        grid.SearchInRange(activeUnit.Location, 2, 1);
+        activeUnit.SetFireManipulation();
     }
 
     public void EarthManipulationApplyButton()

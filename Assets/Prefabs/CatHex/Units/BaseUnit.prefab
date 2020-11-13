@@ -217,12 +217,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47bf2689a2c88d74d81f7e9249495864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: Jesus
-  hp: 14
-  atk: 2
+  unitName: Joffy
+  hp: 20
+  atk: 4
   atkRange: 0
-  initiative: 8
-  movement: 5
+  initiative: 10
+  movement: 3
   unitState: 0
   neighboringCell: {fileID: 0}
   highlight: {fileID: 552885127538835253}

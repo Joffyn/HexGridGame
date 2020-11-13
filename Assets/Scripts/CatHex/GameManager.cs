@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public HexProjectile projectile;
     public HexProjectile[] projectiles;
     public HexEffect effect;
+    public HexEffect[] effects;
     public static GameManager instance;
 
     BoxCollider activeUnitCollider;
@@ -98,7 +99,56 @@ public class GameManager : MonoBehaviour
         coroutineQueue.Enqueue(ProjectileCreator(cells, projectileType));
      }
 
-     IEnumerator ProjectileCreator(List<HexCell> cells, int projectileType)
+    public void CreateEffect(List<HexCell> cells, int effectType)
+    {
+
+    }
+
+    IEnumerator EffectCreator(List<HexCell> cells, int effectType)
+    {
+        // projectileType = 0 = Fire
+
+        if(effectType == 0)
+        effect.effectMovement = 1;
+
+        // HexCell cell = cells[0];
+
+        if (cells[0])
+        {
+            grid.AddEffect(Instantiate(effects[effectType]), cells[0], Random.Range(0f, 360f));
+
+        }
+
+        yield return null;
+    }
+
+
+    IEnumerator EffectMover(List<HexCell> cells, int effectType)
+    {
+        int bounce = 0;
+
+        for (int i = 1; i < cells.Count; i++)
+            {
+                grid.FindPath(cells[bounce], cells[bounce + 1], projectile.projectileMovement);
+                //cell.Projectile.Travel(grid.GetPath());
+                Travel(cells[0].Projectile, grid.GetPath());
+                bounce++;
+            }
+            grid.ClearPath();
+            MaxBounce = bounce;
+            CellsToBeAffected = cells;
+            LastCell = cells.Last();
+            if (projectileType != 2)
+                coroutineQueue.Enqueue(ProjectileDestroyer(LastCell.Projectile));
+
+            //  LastCell.Projectile.DestroyProjectile();
+            yield return null;
+    }
+
+        
+    
+
+    IEnumerator ProjectileCreator(List<HexCell> cells, int projectileType)
     {
         // projectileType = 0 = water without cellchange
         // projectileType = 1 = water

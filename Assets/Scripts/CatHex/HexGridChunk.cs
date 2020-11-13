@@ -5,8 +5,9 @@ public class HexGridChunk : MonoBehaviour
 {
     HexCell[] cells;
 
-    public HexMesh terrain, rivers, roads, water, waterShore, estuaries;
+    public HexMesh terrain, rivers, roads, water, waterShore, estuaries, fire, fireEdge;
     public HexFeatureManager features;
+   // public HexFire fire;
     Canvas gridCanvas;
 
     static Color color1 = new Color(1f, 0f, 0f);
@@ -54,6 +55,8 @@ public class HexGridChunk : MonoBehaviour
         waterShore.Clear();
         estuaries.Clear();
         features.Clear();
+        fire.Clear();
+        fireEdge.Clear();
 
         for (int i = 0; i < cells.Length; i++)
         {
@@ -67,6 +70,8 @@ public class HexGridChunk : MonoBehaviour
         waterShore.Apply();
         estuaries.Apply();
         features.Apply();
+        fire.Apply();
+        fireEdge.Apply();
     }
 
     void Triangulate(HexCell cell)
@@ -79,6 +84,7 @@ public class HexGridChunk : MonoBehaviour
         if (!cell.IsUnderwater && !cell.HasRiver && !cell.HasRoads)
         {
             features.AddFeature(cell, cell.Position);
+           // fire.AddFire(cell, cell.Position);
         }
     }
 
@@ -124,6 +130,10 @@ public class HexGridChunk : MonoBehaviour
             TriangulateWater(direction, cell, center);
         }
 
+        if (cell.IsOnFire)
+        {
+            TriangulateFire(direction, cell, center);
+        }
     }
 
     void TriangulateConnection(HexDirection direction, HexCell cell, EdgeVertices e1)
@@ -745,6 +755,111 @@ public class HexGridChunk : MonoBehaviour
             TriangulateOpenWater(direction, cell, neighbor, center);
         }     
     }
+
+
+
+    void TriangulateFire (HexDirection direction, HexCell cell, Vector3 center)
+    {
+        center.y = cell.FireSurfaceY;
+
+        HexCell neighbor = cell.GetNeighbor(direction);
+     //   center.y = cell.FireSurfaceY;
+      //  Vector3 c1 = center + HexMetrics.GetFirstFireCorner(direction);
+      //  Vector3 c2 = center + HexMetrics.GetSecondFireCorner(direction);
+      //  fire.AddTriangle(center, c1, c2);
+        
+            if (neighbor != null && !neighbor.IsOnFire)
+            {
+                TriangulateFireEdge(direction, cell, neighbor, center);
+            }
+            else
+            {
+                TriangulateOpenFire(direction, cell, neighbor, center);
+            }
+        
+    }
+    void TriangulateOpenFire (HexDirection direction, HexCell cell, HexCell neighbor, Vector3 center)
+    {
+            Vector3 c1 = center + HexMetrics.GetFirstFireCorner(direction);
+        Vector3 c2 = center + HexMetrics.GetSecondFireCorner(direction);
+
+        fire.AddTriangle(center, c1, c2);
+
+        if (direction <= HexDirection.SE && direction != null)
+        {
+
+
+            Vector3 bridge = HexMetrics.GetFireBridge(direction);
+            Vector3 e1 = c1 + bridge;
+            Vector3 e2 = c2 + bridge;
+
+            fire.AddQuad(c1, c2, e1, e2);
+
+            if (direction <= HexDirection.E)
+            {
+                HexCell nextNeighbor = cell.GetNeighbor(direction.Next());
+                if (nextNeighbor == null || !nextNeighbor.IsOnFire)
+                {
+                    return;
+                }
+                fire.AddTriangle(
+                    c2, e2, c2 + HexMetrics.GetFireBridge(direction.Next())
+                );
+
+            }
+        }
+
+    }
+
+    void TriangulateFireEdge (HexDirection direction, HexCell cell, HexCell neighbor, Vector3 center)
+    {
+        EdgeVertices e1 = new EdgeVertices(
+            center + HexMetrics.GetFirstFireCorner(direction),
+            center + HexMetrics.GetSecondFireCorner(direction)
+        );
+        fireEdge.AddTriangle(center, e1.v1, e1.v2);
+        fireEdge.AddTriangle(center, e1.v2, e1.v3);
+        fireEdge.AddTriangle(center, e1.v3, e1.v4);
+        fireEdge.AddTriangle(center, e1.v4, e1.v5);
+
+        // Vector3 bridge = HexMetrics.GetFireBridge(direction);
+        Vector3 center2 = neighbor.Position;
+        center2.y = center.y;
+        EdgeVertices e2 = new EdgeVertices(
+                    //  e1.v1 + bridge,
+                    // e1.v5 + bridge
+                    center2 + HexMetrics.GetSecondSolidCorner(direction.Opposite()),
+            center2 + HexMetrics.GetFirstSolidCorner(direction.Opposite())
+        );
+        fireEdge.AddQuad(e1.v1, e1.v2, e2.v1, e2.v2);
+        fireEdge.AddQuad(e1.v2, e1.v3, e2.v2, e2.v3);
+        fireEdge.AddQuad(e1.v3, e1.v4, e2.v3, e2.v4);
+        fireEdge.AddQuad(e1.v4, e1.v5, e2.v4, e2.v5);
+
+
+        fireEdge.AddQuadUV(0f, 0f, 0f, 1f);
+        fireEdge.AddQuadUV(0f, 0f, 0f, 1f);
+        fireEdge.AddQuadUV(0f, 0f, 0f, 1f);
+        fireEdge.AddQuadUV(0f, 0f, 0f, 1f);
+
+        HexCell nextNeighbor = cell.GetNeighbor(direction.Next());
+        if (nextNeighbor != null)
+        {
+            Vector3 v3 = nextNeighbor.Position + (nextNeighbor.IsOnFire ?
+                    HexMetrics.GetFirstFireCorner(direction.Previous()) :
+                    HexMetrics.GetFirstSolidCorner(direction.Previous()));
+            v3.y = center.y;
+            // fireEdge.AddTriangle(e1.v5, e2.v5, e1.v5 + HexMetrics.GetFireBridge(direction.Next()));
+            fireEdge.AddTriangle(e1.v5, e2.v5, v3);
+              fireEdge.AddTriangleUV(new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(0f, nextNeighbor.IsOnFire ? 0f : 1f));
+
+        }
+
+
+    
+    }
+
+
 
     void TriangulateOpenWater(HexDirection direction, HexCell cell, HexCell neighbor, Vector3 center)
     {

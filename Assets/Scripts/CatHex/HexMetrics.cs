@@ -46,6 +46,10 @@ public static class HexMetrics
     public const float waterFactor = 0.6f;
     public const float waterBlendFactor = 1f - waterFactor;
 
+    public const float fireElevationOffset = -0.5f;
+    public const float fireFactor = 0.6f;
+    public const float fireBlendFactor = 1f - fireFactor;
+
     public const int hashGridSize = 256;
     public const float hashGridScale = 0.25f;
     static HexHash[] hashGrid;
@@ -55,6 +59,22 @@ public static class HexMetrics
         new float[] {0.0f, 0.4f, 0.6f},
         new float[] {0.4f, 0.6f, 0.8f}
     };
+
+    public static Vector3 GetFirstFireCorner(HexDirection direction)
+    {
+        return corners[(int)direction] * fireFactor;
+    }
+
+    public static Vector3 GetSecondFireCorner(HexDirection direction)
+    {
+        return corners[(int)direction + 1] * fireFactor;
+    }
+
+    public static Vector3 GetFireBridge(HexDirection direction)
+    {
+        return (corners[(int)direction] + corners[(int)direction + 1]) *
+            fireBlendFactor;
+    }
 
     public static float[] GetFeatureThresholds(int level)
     {

@@ -26,6 +26,7 @@ public class HexFeatureManager : MonoBehaviour
         walls.Apply();
     }
 
+
     public void AddFeature(HexCell cell, Vector3 position)
     {
         HexHash hash = HexMetrics.SampleHashGrid(position);

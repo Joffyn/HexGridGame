@@ -15,6 +15,8 @@ public class HexMapEditor : MonoBehaviour
     int activeElevation;
     int activeWaterLevel;
     int activeUrbanLevel, activeFarmLevel, activePlantLevel;
+    int activeFireLevel;
+    bool applyFireLevel;
     bool applyElevation = true;
     bool applyWaterLevel = true;
     bool applyUrbanLevel, applyFarmLevel, applyPlantLevel = true;
@@ -146,6 +148,10 @@ public class HexMapEditor : MonoBehaviour
             {
                 cell.PlantLevel = activePlantLevel;
             }
+            if (applyFireLevel)
+            {
+                cell.FireLevel = activeFireLevel;
+            }
             if (riverMode == OptionalToggle.No)
             {
                 cell.RemoveRiver();
@@ -258,6 +264,16 @@ public class HexMapEditor : MonoBehaviour
     public void SetPlantLevel(float level)
     {
         activePlantLevel = (int)level;
+    }
+
+    public void SetApplyFireLevel(bool toggle)
+    {
+        applyFireLevel = toggle;
+    }
+
+    public void SetFireLevel(float level)
+    {
+        activeFireLevel = (int)level;
     }
 
     public void SetBrushSize(float size)

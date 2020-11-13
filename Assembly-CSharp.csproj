@@ -76,6 +76,7 @@
      <Compile Include="Assets\Scripts\CatHex\HexCoordinates.cs" />
      <Compile Include="Assets\Scripts\CatHex\HexFeatureManager.cs" />
      <Compile Include="Assets\Scripts\CatHex\HexFeaturesCollection.cs" />
+     <Compile Include="Assets\Scripts\CatHex\HexFire.cs" />
      <Compile Include="Assets\Scripts\CatHex\HexGameUI.cs" />
      <Compile Include="Assets\Scripts\CatHex\HexGrid.cs" />
      <Compile Include="Assets\Scripts\CatHex\HexGridChunk.cs" />
@@ -186,6 +187,8 @@
      <None Include="Assets\Scripts\ThirdParty\MMInterface\Common\Shaders\VerticalGradient.shader" />
      <None Include="Assets\Art\Ultimate 10 Plus Shaders\Shaders\Plexus\Plexus.compute" />
      <None Include="Assets\Apex\Apex AI Examples and Documentation\GetYourLicense.txt" />
+     <None Include="Assets\Art\Shaders&amp;Materials\FireEdge.shader" />
+     <None Include="Assets\Art\Shaders&amp;Materials\Fire.shader" />
      <None Include="Assets\TBS Framework\Examples\Example1\Scenes\Readme.txt" />
      <None Include="Assets\Apex\Apex Utility AI\ChangeLog.txt" />
      <None Include="Assets\Art\HexagonKit\License.txt" />
@@ -200,15 +203,18 @@
      <None Include="Assets\Art\Ultimate 10 Plus Shaders\Shaders\Outline.shader" />
      <None Include="Assets\Art\Ultimate 10 Plus Shaders\Shaders\Plexus\Plexus Line.shader" />
      <None Include="Assets\Art\Ultimate 10 Plus Shaders\Shaders\Snow.shader" />
+     <None Include="Assets\Art\Shaders&amp;Materials\FireInc.cginc.shader" />
      <None Include="Assets\Art\Ultimate 10 Plus Shaders\Shaders\Lava3D.shader" />
      <None Include="Assets\Art\Ultimate 10 Plus Shaders\Shaders\Force Field.shader" />
      <None Include="Assets\Art\Shaders&amp;Materials\WaterShore.shader" />
      <None Include="Assets\Scripts\ThirdParty\MMInterface\Common\Shaders\HorizontalGradient.shader" />
      <None Include="Assets\Art\Shaders&amp;Materials\Terrain.shader" />
      <None Include="Assets\Art\Shaders&amp;Materials\River.shader" />
+     <None Include="Assets\Hovl Studio\Procedural fire\Shaders\FireSphere.shader" />
      <None Include="Assets\TBS Framework\Examples\Example2\Scenes\Readme.txt" />
      <None Include="Assets\Art\Ultimate 10 Plus Shaders\Shaders\Simple Sine Wave.shader" />
      <None Include="Assets\TBS Framework\ReleaseNotes.txt" />
+     <None Include="Assets\Hovl Studio\Procedural fire\Demo scene\Readme.txt" />
      <None Include="Assets\TBS Framework\Examples\Example4\Scenes\Readme.txt" />
      <None Include="Assets\Apex\Apex Binaries\link.xml" />
  <Reference Include="UnityEngine">

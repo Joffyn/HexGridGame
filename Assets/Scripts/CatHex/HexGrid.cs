@@ -486,20 +486,16 @@ public class HexGrid : MonoBehaviour
         projectile.Orientation = orientation;
     }
 
-/*
-    public void AddEffect(HexEffect effect, HexCell location)
+
+    public void AddEffect(HexEffect effect, HexCell location, float orientation)
     {
         // activeProjectiles.Add(projectile);
         effect.transform.SetParent(transform, false);
         effect.Location = location;
+        effect.Orientation = orientation;
     }
-    */
-    public void AddEffect(HexEffect effect, Vector3 deathPos)
-    {
-        // activeProjectiles.Add(projectile);
-        effect.transform.SetParent(transform, false);
-        effect.transform.position = deathPos;
-    }
+
+   
     public void RemoveUnit(HexUnit unit)
     {
         activeUnits.Remove(unit);
